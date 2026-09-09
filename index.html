@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rapi | Daily & Weekly Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#"><span class="brand-mark">r.</span><span>rapi</span></a>
+        <nav aria-label="Navigasi utama">
+          <button class="nav-item active" data-view="daily"><span>◷</span> Daily report</button>
+          <button class="nav-item" data-view="weekly"><span>▤</span> Weekly report</button>
+          <button class="nav-item" data-view="archive"><span>□</span> Arsip</button>
+        </nav>
+        <div class="sidebar-foot">
+          <div class="profile-avatar">YK</div>
+          <div><strong id="sidebarName">Yonatan Kristanto</strong><small>Sales Engineer</small></div>
+        </div>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <div><p class="eyebrow">REPORTING WORKSPACE</p><h1 id="pageTitle">Daily report</h1></div>
+          <div class="top-actions"><button class="icon-button" title="Notifikasi">♧</button><button class="avatar">YK</button></div>
+        </header>
+
+        <section id="dailyView" class="view active">
+          <div class="intro-row"><div><h2>Selamat pagi, Yonatan.</h2><p>Catat kegiatan hari ini, lalu biarkan Rapi merapikannya menjadi report yang siap ditinjau.</p></div><button class="button secondary" id="loadExample">Muat contoh</button></div>
+          <div class="workspace-grid">
+            <section class="card composer-card">
+              <div class="card-heading"><div><p class="eyebrow">1. MASUKAN AKTIVITAS</p><h3>Catatan hari ini</h3></div><span class="date-badge" id="dailyDateLabel"></span></div>
+              <div class="form-grid meta-form">
+                <label>Nama karyawan<input id="employeeName" value="Yonatan Kristanto" /></label>
+                <label>Tanggal<input id="reportDate" type="date" /></label>
+              </div>
+              <label>Catatan mentah aktivitas
+                <textarea id="activityNotes" placeholder="Contoh: Pagi meeting perkenalan Stealien ke user. Setelah makan siang siapkan demo Sparrow untuk Bank J-Trust, lalu klarifikasi teknis dengan tim Korea."></textarea>
+              </label>
+              <div class="hint"><span>✦</span> Tulis senatural mungkin. Sistem akan menyarankan judul, detail, organisasi, dan status.</div>
+              <button class="button primary full" id="generateDraft"><span>✦</span> Buat rekomendasi report</button>
+            </section>
+
+            <section class="card preview-card">
+              <div class="card-heading"><div><p class="eyebrow">2. REVIEW & EDIT</p><h3>Draft daily report</h3></div><span class="pill draft">DRAFT</span></div>
+              <div id="emptyDraft" class="empty-state"><div class="empty-icon">✦</div><h3>Belum ada draft</h3><p>Masukkan catatan aktivitas untuk membuat rekomendasi report.</p></div>
+              <div id="draftArea" hidden>
+                <div class="report-meta"><div><span>PROJECT TITLE</span><strong>Task Report</strong></div><div><span>DATE</span><strong id="previewDate"></strong></div><div><span>EMPLOYEE NAME</span><strong id="previewName"></strong></div></div>
+                <div class="table-wrap"><table><thead><tr><th>Status</th><th>Waktu</th><th>Task name</th><th>Description detail</th><th>Organization</th><th></th></tr></thead><tbody id="taskRows"></tbody></table></div>
+                <div class="preview-actions"><span id="taskCount">0 aktivitas</span><div><button class="text-button" id="addRow">+ Tambah baris</button><button class="button dark" id="saveDaily">Simpan daily report</button></div></div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section id="weeklyView" class="view">
+          <div class="intro-row"><div><h2>Weekly report yang rapi.</h2><p>Pilih minggu, lalu gabungkan seluruh daily report Senin sampai Jumat secara otomatis.</p></div></div>
+          <section class="card weekly-setup">
+            <div class="weekly-controls"><label>Minggu yang ingin dibuat<input type="date" id="weekPicker" /></label><button class="button primary" id="generateWeekly"><span>↗</span> Gabungkan 5 hari kerja</button></div>
+            <p class="helper-copy">Hanya report hari kerja (Senin-Jumat) yang dimasukkan. Anda tetap bisa menyunting hasil gabungan sebelum menyimpan.</p>
+          </section>
+          <section class="card weekly-result" id="weeklyResult" hidden>
+            <div class="card-heading"><div><p class="eyebrow">WEEKLY REPORT</p><h3 id="weekTitle"></h3></div><span class="pill draft">DRAFT</span></div>
+            <div class="weekly-summary"><div><strong id="weeklyTaskTotal">0</strong><span>total aktivitas</span></div><div><strong id="weeklyDaysTotal">0</strong><span>hari terisi</span></div><div><strong id="weeklyCompleteTotal">0</strong><span>selesai</span></div></div>
+            <div class="table-wrap"><table><thead><tr><th>Status</th><th>Tanggal</th><th>Task name</th><th>Description detail</th><th>Organization</th></tr></thead><tbody id="weeklyRows"></tbody></table></div>
+            <div class="preview-actions"><span>Disusun dari daily report tersimpan</span><button class="button dark" id="saveWeekly">Simpan weekly report</button></div>
+          </section>
+          <div class="empty-week" id="emptyWeek"><div class="empty-icon">▤</div><h3>Siap menggabungkan report</h3><p>Pilih tanggal apa pun dalam satu minggu untuk melihat rangkuman Senin-Jumat.</p></div>
+        </section>
+
+        <section id="archiveView" class="view">
+          <div class="intro-row"><div><h2>Arsip report.</h2><p>Daily dan weekly report yang sudah disimpan akan tampil di sini.</p></div></div>
+          <section class="archive-list" id="archiveList"></section>
+        </section>
+      </main>
+    </div>
+    <template id="taskRowTemplate"><tr><td><select class="status-select"><option>Complete</option><option>In Progress</option><option>On Hold</option><option>Not Yet Started</option></select></td><td><input class="time-input" placeholder="09:00 - 10:00" /></td><td><input class="task-input" placeholder="Task" /></td><td><input class="detail-input" placeholder="Detail aktivitas" /></td><td><input class="org-input" placeholder="Organisasi" /></td><td><button class="remove-row" title="Hapus">×</button></td></tr></template>
+    <script src="app.js"></script>
+  </body>
+</html>
