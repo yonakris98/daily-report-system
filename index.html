@@ -39,10 +39,12 @@
                 <label>Nama karyawan<input id="employeeName" value="Yonatan Kristanto" /></label>
                 <label>Tanggal<input id="reportDate" type="date" /></label>
               </div>
-              <label>Catatan mentah aktivitas
-                <textarea id="activityNotes" placeholder="Contoh: Pagi meeting perkenalan Stealien ke user. Setelah makan siang siapkan demo Sparrow untuk Bank J-Trust, lalu klarifikasi teknis dengan tim Korea."></textarea>
+              <label>Aktivitas hari ini
+                <textarea id="activityNotes" placeholder="8-11 prepare sparrow untuk bank j-trust,
+11-12 follow up akun stealthmole untuk polri,
+13-17 meeting sparrow dengan j-trust"></textarea>
               </label>
-              <div class="hint"><span>✦</span> Tulis senatural mungkin. Sistem akan menyarankan judul, detail, organisasi, dan status.</div>
+              <div class="hint"><span>✦</span> Satu aktivitas per baris: <strong>[jam] [description]</strong>. Jam dan description diisi persis dari input; sistem hanya merekomendasikan detail.</div>
               <button class="button primary full" id="generateDraft"><span>✦</span> Buat rekomendasi report</button>
             </section>
 
@@ -51,8 +53,8 @@
               <div id="emptyDraft" class="empty-state"><div class="empty-icon">✦</div><h3>Belum ada draft</h3><p>Masukkan catatan aktivitas untuk membuat rekomendasi report.</p></div>
               <div id="draftArea" hidden>
                 <div class="report-meta"><div><span>PROJECT TITLE</span><strong>Task Report</strong></div><div><span>DATE</span><strong id="previewDate"></strong></div><div><span>EMPLOYEE NAME</span><strong id="previewName"></strong></div></div>
-                <div class="table-wrap"><table><thead><tr><th>Status</th><th>Waktu</th><th>Task name</th><th>Description detail</th><th>Organization</th><th></th></tr></thead><tbody id="taskRows"></tbody></table></div>
-                <div class="preview-actions"><span id="taskCount">0 aktivitas</span><div><button class="text-button" id="addRow">+ Tambah baris</button><button class="button dark" id="saveDaily">Simpan daily report</button></div></div>
+                <div class="table-wrap"><table><thead><tr><th>Status</th><th>Jam</th><th>Description</th><th>Detail (rekomendasi)</th><th>Organization</th><th></th></tr></thead><tbody id="taskRows"></tbody></table></div>
+                <div class="preview-actions"><span id="taskCount">0 aktivitas</span><div><button class="text-button" id="addRow">+ Tambah baris</button><a class="button secondary" id="downloadDaily" download>↓ Download PDF</a><button class="button dark" id="saveDaily">Simpan daily report</button></div></div>
               </div>
             </section>
           </div>
@@ -67,8 +69,8 @@
           <section class="card weekly-result" id="weeklyResult" hidden>
             <div class="card-heading"><div><p class="eyebrow">WEEKLY REPORT</p><h3 id="weekTitle"></h3></div><span class="pill draft">DRAFT</span></div>
             <div class="weekly-summary"><div><strong id="weeklyTaskTotal">0</strong><span>total aktivitas</span></div><div><strong id="weeklyDaysTotal">0</strong><span>hari terisi</span></div><div><strong id="weeklyCompleteTotal">0</strong><span>selesai</span></div></div>
-            <div class="table-wrap"><table><thead><tr><th>Status</th><th>Tanggal</th><th>Task name</th><th>Description detail</th><th>Organization</th></tr></thead><tbody id="weeklyRows"></tbody></table></div>
-            <div class="preview-actions"><span>Disusun dari daily report tersimpan</span><button class="button dark" id="saveWeekly">Simpan weekly report</button></div>
+            <div class="table-wrap"><table><thead><tr><th>Status</th><th>Tanggal</th><th>Jam</th><th>Description</th><th>Detail</th><th>Organization</th></tr></thead><tbody id="weeklyRows"></tbody></table></div>
+            <div class="preview-actions"><span>Disusun dari daily report tersimpan</span><div><a class="button secondary" id="downloadWeekly" download>↓ Download PDF</a><button class="button dark" id="saveWeekly">Simpan weekly report</button></div></div>
           </section>
           <div class="empty-week" id="emptyWeek"><div class="empty-icon">▤</div><h3>Siap menggabungkan report</h3><p>Pilih tanggal apa pun dalam satu minggu untuk melihat rangkuman Senin-Jumat.</p></div>
         </section>
@@ -79,7 +81,7 @@
         </section>
       </main>
     </div>
-    <template id="taskRowTemplate"><tr><td><select class="status-select"><option>Complete</option><option>In Progress</option><option>On Hold</option><option>Not Yet Started</option></select></td><td><input class="time-input" placeholder="09:00 - 10:00" /></td><td><input class="task-input" placeholder="Task" /></td><td><input class="detail-input" placeholder="Detail aktivitas" /></td><td><input class="org-input" placeholder="Organisasi" /></td><td><button class="remove-row" title="Hapus">×</button></td></tr></template>
+    <template id="taskRowTemplate"><tr><td><select class="status-select"><option>Complete</option><option>In Progress</option><option>On Hold</option><option>Not Yet Started</option></select></td><td><input class="time-input" placeholder="08:00-11:00" /></td><td><input class="description-input" placeholder="Description" /></td><td><input class="detail-input" placeholder="Rekomendasi detail" /></td><td><input class="org-input" placeholder="Organisasi" /></td><td><button class="remove-row" title="Hapus">×</button></td></tr></template>
     <script src="app.js"></script>
   </body>
 </html>
